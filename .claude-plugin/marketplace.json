@@ -8,7 +8,7 @@
     {
       "name": "sample-toolkit",
       "source": "./plugins/sample-toolkit",
-      "description": "OpenAPI 기반 MCP 서버, Skill, Hook, Agent를 모두 포함한 실습용 샘플 플러그인"
+      "description": "Open Library 책 검색·추천 OpenAPI 기반 MCP 서버, Skill, Hook, Agent를 모두 포함한 실습용 샘플 플러그인"
     }
   ]
 }

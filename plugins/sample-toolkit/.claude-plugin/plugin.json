@@ -1,11 +1,11 @@
 {
   "name": "sample-toolkit",
-  "version": "0.1.2",
-  "description": "OpenAPI 스펙으로부터 MCP 도구를 동적으로 생성하고, Skill/Hook/Agent를 함께 묶은 실습용 샘플 플러그인",
+  "version": "0.2.0",
+  "description": "Open Library 책 검색·추천 OpenAPI 스펙으로부터 MCP 도구를 동적으로 생성하고, Skill/Hook/Agent를 함께 묶은 실습용 샘플 플러그인",
   "author": {
     "name": "byun970"
   },
-  "keywords": ["sample", "openapi", "mcp", "education"],
+  "keywords": ["sample", "openapi", "mcp", "education", "books"],
   "license": "MIT",
   "mcpServers": "./.mcp.json",
   "hooks": "./hooks/hooks.json"

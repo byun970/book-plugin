@@ -1,67 +1,79 @@
 {
   "openapi": "3.0.3",
   "info": {
-    "title": "Todo Demo API",
+    "title": "Book Discovery API",
     "version": "1.0.0",
-    "description": "JSONPlaceholder의 /todos 엔드포인트 일부를 그대로 노출하는 실습용 OpenAPI 스펙"
+    "description": "Open Library의 공개 API 일부를 노출하는 실습용 OpenAPI 스펙. 책 검색, 작품 상세 조회, 주제별 추천을 제공한다."
   },
   "servers": [
-    { "url": "https://jsonplaceholder.typicode.com" }
+    { "url": "https://openlibrary.org" }
   ],
   "paths": {
-    "/todos": {
+    "/search.json": {
       "get": {
-        "operationId": "listTodos",
-        "summary": "할 일 목록 조회",
+        "operationId": "searchBooks",
+        "summary": "제목/저자/키워드로 책 검색",
         "parameters": [
           {
-            "name": "userId",
+            "name": "q",
             "in": "query",
-            "required": false,
-            "schema": { "type": "integer" },
-            "description": "특정 사용자의 할 일만 조회할 때 사용"
+            "required": true,
+            "schema": { "type": "string" },
+            "description": "검색어 (제목, 저자, 키워드 등)"
           },
           {
-            "name": "_limit",
+            "name": "limit",
             "in": "query",
             "required": false,
-            "schema": { "type": "integer" },
-            "description": "반환할 개수 제한"
+            "schema": { "type": "integer", "default": 5 },
+            "description": "반환할 결과 개수"
+          },
+          {
+            "name": "fields",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "default": "key,title,author_name,first_publish_year,cover_i,edition_count"
+            },
+            "description": "응답에 포함할 필드 목록 (쉼표로 구분)"
           }
         ]
-      },
-      "post": {
-        "operationId": "createTodo",
-        "summary": "새 할 일 생성 (모의 응답)",
-        "requestBody": {
-          "required": true,
-          "content": {
-            "application/json": {
-              "schema": {
-                "type": "object",
-                "required": ["title", "userId"],
-                "properties": {
-                  "title": { "type": "string", "description": "할 일 제목" },
-                  "userId": { "type": "integer", "description": "담당 사용자 ID" },
-                  "completed": { "type": "boolean", "description": "완료 여부", "default": false }
-                }
-              }
-            }
-          }
-        }
       }
     },
-    "/todos/{id}": {
+    "/works/{olid}.json": {
       "get": {
-        "operationId": "getTodoById",
-        "summary": "ID로 할 일 단건 조회",
+        "operationId": "getWorkDetails",
+        "summary": "OLID로 작품 상세 정보 조회 (줄거리, 저자, 표지 등)",
         "parameters": [
           {
-            "name": "id",
+            "name": "olid",
             "in": "path",
             "required": true,
-            "schema": { "type": "integer" },
-            "description": "조회할 할 일의 ID"
+            "schema": { "type": "string" },
+            "description": "작품 OLID. 예: OL893414W (searchBooks 결과의 key 필드에서 /works/ 다음 부분)"
+          }
+        ]
+      }
+    },
+    "/subjects/{subject}.json": {
+      "get": {
+        "operationId": "recommendBySubject",
+        "summary": "주제(장르)별 추천 도서 목록 조회",
+        "parameters": [
+          {
+            "name": "subject",
+            "in": "path",
+            "required": true,
+            "schema": { "type": "string" },
+            "description": "주제 slug. 예: science_fiction, mystery, romance, fantasy"
+          },
+          {
+            "name": "limit",
+            "in": "query",
+            "required": false,
+            "schema": { "type": "integer", "default": 5 },
+            "description": "반환할 책 개수"
           }
         ]
       }

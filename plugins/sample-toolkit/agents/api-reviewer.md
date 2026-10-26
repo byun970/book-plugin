@@ -1,6 +1,6 @@
 ---
 name: api-reviewer
-description: sample-toolkit의 todo-api MCP 도구 호출 결과가 openapi.json 스펙과 일치하는지 검토하는 읽기 전용 에이전트. MCP 도구 응답의 필드 누락, 타입 불일치, 예상치 못한 에러를 점검할 때 사용한다.
+description: sample-toolkit의 book-api MCP 도구 호출 결과가 openapi.json 스펙과 일치하는지 검토하는 읽기 전용 에이전트. MCP 도구 응답의 필드 누락, 타입 불일치, 예상치 못한 에러를 점검할 때 사용한다.
 tools: Read, Grep, Glob
 ---
 

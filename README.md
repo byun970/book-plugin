@@ -1,6 +1,6 @@
 # wori-sample-marketplace
 
-Claude Code 커스텀 플러그인 실습 자료. `sample-toolkit` 플러그인 하나를 담은 마켓플레이스 저장소입니다.
+Claude Code 커스텀 플러그인 실습 자료. `sample-toolkit` 플러그인 하나를 담은 마켓플레이스 저장소입니다. Open Library 공개 API(키 불필요)로 책을 검색·추천합니다.
 
 ```
 261026_16_plugin/
@@ -9,15 +9,16 @@ Claude Code 커스텀 플러그인 실습 자료. `sample-toolkit` 플러그인 
 └── plugins/
     └── sample-toolkit/
         ├── .claude-plugin/plugin.json
-        ├── mcp-server/            # 1) OpenAPI 활용 + 2) MCP 서버
+        ├── mcp-server/                 # 1) OpenAPI 활용 + 2) MCP 서버
         │   ├── openapi.json
         │   ├── server.js
         │   └── package.json
-        ├── skills/todo-briefing/  # 3) Skill
-        ├── agents/api-reviewer.md # 3) Agent
-        ├── hooks/                 # 3) Hook
+        ├── skills/book-recommender/    # 3) Skill
+        ├── agents/api-reviewer.md      # 3) Agent
+        ├── hooks/                      # 3) Hook
         │   ├── hooks.json
         │   └── log-call.js
+        ├── evals/book-recommender-basic/  # 5) 평가(eval)
         └── .mcp.json
 ```
 
@@ -68,7 +69,7 @@ claude --plugin-dir ./plugins/sample-toolkit
 # 평가(eval) 실행 — 실제 MCP 서버와 도구 사용을 허용
 cd plugins/sample-toolkit
 claude plugin eval . --ablation none --allow-real-servers \
-  --allow-tools "mcp__plugin_sample-toolkit_todo-api__listTodos" \
+  --allow-tools "mcp__plugin_sample-toolkit_book-api__recommendBySubject" \
   --trust-plugin --no-publish
 ```
 

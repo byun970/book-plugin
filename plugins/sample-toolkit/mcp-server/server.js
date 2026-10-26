@@ -83,11 +83,18 @@ async function callTool(name, args) {
     return { isError: true, content: [{ type: "text", text: `입력값 검증 실패:\n- ${validationErrors.join("\n- ")}` }] };
   }
 
+  const effectiveArgs = { ...args };
+  for (const [key, propSchema] of Object.entries(tool.inputSchema.properties ?? {})) {
+    if (effectiveArgs[key] === undefined && propSchema.default !== undefined) {
+      effectiveArgs[key] = propSchema.default;
+    }
+  }
+
   let urlPath = tool.route.routePath;
   const query = new URLSearchParams();
   const bodyFields = {};
 
-  for (const [key, value] of Object.entries(args ?? {})) {
+  for (const [key, value] of Object.entries(effectiveArgs)) {
     if (urlPath.includes(`{${key}}`)) {
       urlPath = urlPath.replace(`{${key}}`, encodeURIComponent(String(value)));
     } else if (tool.route.method === "GET") {
@@ -146,7 +153,7 @@ rl.on("line", async (line) => {
       result: {
         protocolVersion: "2024-11-05",
         capabilities: { tools: {} },
-        serverInfo: { name: "sample-toolkit-todo-api", version: "0.1.2" },
+        serverInfo: { name: "sample-toolkit-book-api", version: "0.2.0" },
       },
     });
     return;
