@@ -1,10 +1,7 @@
 {
   "name": "sample-toolkit-mcp-server",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "private": true,
   "type": "module",
-  "main": "server.js",
-  "dependencies": {
-    "@modelcontextprotocol/sdk": "^1.0.0"
-  }
+  "main": "server.js"
 }

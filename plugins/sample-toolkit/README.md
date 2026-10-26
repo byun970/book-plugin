@@ -5,17 +5,10 @@
 | 구성요소 | 위치 | 설명 |
 | :- | :- | :- |
 | OpenAPI 스펙 | `mcp-server/openapi.json` | Todo API 일부(`listTodos`, `getTodoById`, `createTodo`)를 정의 |
-| MCP 서버 | `mcp-server/server.js` | openapi.json을 읽어 operationId마다 MCP 도구를 동적으로 등록, jsonplaceholder.typicode.com에 실제 호출 |
+| MCP 서버 | `mcp-server/server.js` | openapi.json을 읽어 operationId마다 MCP 도구를 동적으로 등록, jsonplaceholder.typicode.com에 실제 호출. 외부 npm 의존성 없이 Node 기본 모듈만 사용 |
 | Skill | `skills/todo-briefing/SKILL.md` | todo-api 도구로 할 일을 조회해 표 형태로 요약 |
 | Hook | `hooks/hooks.json`, `hooks/log-call.js` | todo-api 도구 호출 전마다 `hooks/call-log.jsonl`에 기록 |
 | Agent | `agents/api-reviewer.md` | 도구 호출 결과가 OpenAPI 스펙과 일치하는지 검토하는 읽기 전용 리뷰어 |
-
-## 설치 전 준비
-
-```bash
-cd plugins/sample-toolkit/mcp-server
-npm install
-```
 
 ## 로컬에서 바로 써보기 (마켓플레이스 배포 전)
 
