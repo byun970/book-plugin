@@ -1,5 +1,9 @@
 # wori-sample-marketplace
 
+[![License](https://img.shields.io/github/license/byun970/book-plugin)](LICENSE)
+[![Claude Code Plugin](https://img.shields.io/badge/Claude%20Code-Install%20Plugin-5A32FB)](#4단계-깃허브-배포)
+[![Last Commit](https://img.shields.io/github/last-commit/byun970/book-plugin)](https://github.com/byun970/book-plugin/commits/main)
+
 Claude Code 커스텀 플러그인 실습 자료. `book-plugin` 플러그인 하나를 담은 마켓플레이스 저장소입니다. Open Library 공개 API(키 불필요)로 책을 검색·추천합니다.
 
 ```

@@ -1,5 +1,9 @@
 # book-plugin
 
+[![License](https://img.shields.io/github/license/byun970/book-plugin)](../../LICENSE)
+[![Claude Code Plugin](https://img.shields.io/badge/Claude%20Code-Install%20Plugin-5A32FB)](#깃허브에서-설치)
+[![Last Commit](https://img.shields.io/github/last-commit/byun970/book-plugin)](https://github.com/byun970/book-plugin/commits/main)
+
 실습용 Claude Code 플러그인. Open Library 공개 API(키 불필요)로 책을 검색·추천하며, 아래 다섯 요소를 모두 포함합니다.
 
 | 구성요소 | 위치 | 설명 |
