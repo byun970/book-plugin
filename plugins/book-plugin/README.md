@@ -53,3 +53,18 @@ claude plugin eval . \
 
 `--trust-plugin`은 자신이 작성한 플러그인에 한해 최초 실행 확인 프롬프트를 건너뛸 때 씁니다.
 새 케이스를 추가하려면 `claude plugin eval init <이름> --bare`로 템플릿을 생성합니다.
+
+## 업데이트 이력
+
+| 버전 | 커밋 | 내용 |
+| :- | :- | :- |
+| 0.1.0 | `6883850` | 초기 커밋. Todo API 기반 OpenAPI·MCP 서버·Skill·Hook·Agent 뼈대 |
+| 0.1.1 | `5269b43` | MCP 서버의 외부 npm 의존성 제거 (새로 설치한 환경에서도 바로 동작하도록) |
+| 0.1.2 | `50b6e75` | 입력값 검증과 HTTP 오류 처리 추가 |
+| - | `c60f67d` | `claude plugin eval` 구조 추가 |
+| - | `f5a0827` | 플러그인 아이콘 추가 |
+| 0.2.0 | `6bd80ba` | 주제를 Todo API에서 Open Library 책 검색·추천으로 전면 교체 |
+| 0.2.1 | `7897c7f` | api-reviewer 검토 반영 — 응답 스펙, 구조화된 오류, 파라미터 화이트리스트 검증 추가 |
+| 0.3.0 | `9b41379` | 플러그인 이름을 sample-toolkit에서 book-plugin으로 변경 |
+| 0.3.1 | `7d744fb` | 입력값 검증 실패 응답도 ErrorResponse 스키마로 통일 |
+| - | `ee1c216` | eval 채점 기준의 모호함 제거 (업스트림 장르 태깅 정확성은 검증 대상 아님을 명시) |
