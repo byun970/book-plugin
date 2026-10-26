@@ -43,10 +43,44 @@ for (const [routePath, methods] of Object.entries(spec.paths)) {
   }
 }
 
+function validateArgs(tool, args) {
+  const errors = [];
+  const schema = tool.inputSchema;
+
+  for (const key of schema.required ?? []) {
+    const value = args[key];
+    if (value === undefined || value === null || value === "") {
+      errors.push(`필수 필드 누락: ${key}`);
+    }
+  }
+
+  for (const [key, propSchema] of Object.entries(schema.properties ?? {})) {
+    if (args[key] === undefined || args[key] === null) continue;
+    const value = args[key];
+    const type = propSchema.type;
+    if (type === "integer" && !Number.isInteger(Number(value))) {
+      errors.push(`${key}는 integer여야 합니다 (받은 값: ${JSON.stringify(value)})`);
+    } else if (type === "number" && Number.isNaN(Number(value))) {
+      errors.push(`${key}는 number여야 합니다 (받은 값: ${JSON.stringify(value)})`);
+    } else if (type === "boolean" && typeof value !== "boolean") {
+      errors.push(`${key}는 boolean이어야 합니다 (받은 값: ${JSON.stringify(value)})`);
+    } else if (type === "string" && typeof value !== "string") {
+      errors.push(`${key}는 string이어야 합니다 (받은 값: ${JSON.stringify(value)})`);
+    }
+  }
+
+  return errors;
+}
+
 async function callTool(name, args) {
   const tool = tools.find((t) => t.name === name);
   if (!tool) {
     return { isError: true, content: [{ type: "text", text: `알 수 없는 도구: ${name}` }] };
+  }
+
+  const validationErrors = validateArgs(tool, args ?? {});
+  if (validationErrors.length > 0) {
+    return { isError: true, content: [{ type: "text", text: `입력값 검증 실패:\n- ${validationErrors.join("\n- ")}` }] };
   }
 
   let urlPath = tool.route.routePath;
@@ -72,7 +106,16 @@ async function callTool(name, args) {
       headers: { "Content-Type": "application/json" },
       body: tool.route.method === "GET" ? undefined : JSON.stringify(bodyFields),
     });
-    const data = await response.json();
+    const text = await response.text();
+
+    if (!response.ok) {
+      return {
+        isError: true,
+        content: [{ type: "text", text: `API 오류 (HTTP ${response.status} ${response.statusText}): ${text}` }],
+      };
+    }
+
+    const data = text ? JSON.parse(text) : null;
     return { content: [{ type: "text", text: JSON.stringify(data, null, 2) }] };
   } catch (error) {
     return { isError: true, content: [{ type: "text", text: `API 호출 실패: ${error.message}` }] };
@@ -103,7 +146,7 @@ rl.on("line", async (line) => {
       result: {
         protocolVersion: "2024-11-05",
         capabilities: { tools: {} },
-        serverInfo: { name: "sample-toolkit-todo-api", version: "0.1.1" },
+        serverInfo: { name: "sample-toolkit-todo-api", version: "0.1.2" },
       },
     });
     return;
