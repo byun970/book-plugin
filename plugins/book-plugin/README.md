@@ -6,6 +6,8 @@
 
 실습용 Claude Code 플러그인. Open Library 공개 API(키 불필요)로 책을 검색·추천하며, 아래 다섯 요소를 모두 포함합니다.
 
+**저장소**: https://github.com/byun970/book-plugin
+
 | 구성요소 | 위치 | 설명 |
 | :- | :- | :- |
 | OpenAPI 스펙 | `mcp-server/openapi.json` | Book Discovery API(`searchBooks`, `getWorkDetails`, `recommendBySubject`)를 정의 |

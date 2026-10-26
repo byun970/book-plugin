@@ -6,6 +6,8 @@
 
 Claude Code 커스텀 플러그인 실습 자료. `book-plugin` 플러그인 하나를 담은 마켓플레이스 저장소입니다. Open Library 공개 API(키 불필요)로 책을 검색·추천합니다.
 
+**저장소**: https://github.com/byun970/book-plugin
+
 ```
 261026_16_plugin/
 ├── .claude-plugin/
