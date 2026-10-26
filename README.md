@@ -74,3 +74,20 @@ claude plugin eval . --ablation none --allow-real-servers \
 ```
 
 위 명령은 실제로 실행해 3회 반복 모두 통과(score 1.00)하는 것을 확인했습니다. 자세한 옵션은 `plugins/book-plugin/README.md`의 "평가(eval)" 절을 참고하세요.
+
+## 업데이트 이력
+
+| 버전 | 커밋 | 내용 |
+| :- | :- | :- |
+| 0.1.0 | `6883850` | 초기 커밋. Todo API 기반 OpenAPI·MCP 서버·Skill·Hook·Agent·마켓플레이스 구조 |
+| 0.1.1 | `5269b43` | MCP 서버의 외부 npm 의존성 제거 (새로 설치한 환경에서도 바로 동작하도록) |
+| 0.1.2 | `50b6e75` | 입력값 검증과 HTTP 오류 처리 추가 |
+| - | `e8b5b41` | 설치 안내 문서 정리, 불필요한 gitignore 항목 제거 |
+| - | `c60f67d` | `claude plugin eval` 구조 추가 |
+| - | `f5a0827` | 플러그인 아이콘 추가 |
+| 0.2.0 | `6bd80ba` | 주제를 Todo API에서 Open Library 책 검색·추천으로 전면 교체 |
+| 0.2.1 | `7897c7f` | api-reviewer 검토 반영 — 응답 스펙, 구조화된 오류, 파라미터 화이트리스트 검증 추가 |
+| 0.3.0 | `9b41379` | 플러그인 이름을 sample-toolkit에서 book-plugin으로 변경 |
+| 0.3.1 | `7d744fb` | 입력값 검증 실패 응답도 ErrorResponse 스키마로 통일 |
+| - | `200131f` | GitHub 저장소 이름을 book-plugin으로 변경, 설치 안내 URL 갱신 |
+| - | `ee1c216` | eval 채점 기준의 모호함 제거 (업스트림 장르 태깅 정확성은 검증 대상 아님을 명시) |
