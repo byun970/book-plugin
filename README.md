@@ -27,27 +27,29 @@ Claude Code 커스텀 플러그인 실습 자료. `sample-toolkit` 플러그인 
 
 ## 4단계: 깃허브 배포
 
-```bash
-cd 261026_16_plugin
-git init
-git add .
-git commit -m "sample-toolkit 플러그인 초기 커밋"
-git remote add origin https://github.com/<계정>/<저장소>.git
-git push -u origin main
-```
+이 저장소는 이미 다음 주소에 배포되어 있습니다: https://github.com/byun970/wori-sample-plugin
 
-푸시 후 다른 세션(또는 다른 사용자)이 아래 명령으로 설치할 수 있습니다.
+다른 세션(또는 다른 사용자)은 아래 명령으로 설치할 수 있습니다.
 
 ```bash
-claude plugin marketplace add <계정>/<저장소>
+claude plugin marketplace add byun970/wori-sample-plugin
 claude plugin install sample-toolkit@wori-sample-marketplace
 ```
 
 세션 안에서는 다음과 같이 설치합니다.
 
 ```
-/plugin install sample-toolkit --marketplace <계정>/<저장소>
+/plugin install sample-toolkit --marketplace byun970/wori-sample-plugin
 ```
+
+설치 후 플러그인을 업데이트할 때는 다음 순서로 진행합니다.
+
+```bash
+claude plugin marketplace update wori-sample-marketplace
+claude plugin update sample-toolkit@wori-sample-marketplace
+```
+
+업데이트는 다음 세션부터 적용됩니다.
 
 ## 5단계: 플러그인 테스트
 

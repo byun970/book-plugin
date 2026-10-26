@@ -18,10 +18,17 @@ claude --plugin-dir ./plugins/sample-toolkit
 
 세션 안에서 "할 일 5개 보여줘" 라고 물어보면 `todo-briefing` 스킬과 `todo-api` MCP 도구가 동작합니다.
 
-## 깃허브에 올린 뒤 설치
+## 깃허브에서 설치
 
 ```
-/plugin install sample-toolkit --marketplace <owner>/<repo>
+/plugin install sample-toolkit --marketplace byun970/wori-sample-plugin
+```
+
+또는 CLI에서:
+
+```bash
+claude plugin marketplace add byun970/wori-sample-plugin
+claude plugin install sample-toolkit@wori-sample-marketplace
 ```
 
 ## 검증
