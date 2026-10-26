@@ -21,13 +21,13 @@ claude --plugin-dir ./plugins/book-plugin
 ## 깃허브에서 설치
 
 ```
-/plugin install book-plugin --marketplace byun970/wori-sample-plugin
+/plugin install book-plugin --marketplace byun970/book-plugin
 ```
 
 또는 CLI에서:
 
 ```bash
-claude plugin marketplace add byun970/wori-sample-plugin
+claude plugin marketplace add byun970/book-plugin
 claude plugin install book-plugin@wori-sample-marketplace
 ```
 

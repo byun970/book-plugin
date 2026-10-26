@@ -28,19 +28,19 @@ Claude Code 커스텀 플러그인 실습 자료. `book-plugin` 플러그인 하
 
 ## 4단계: 깃허브 배포
 
-이 저장소는 이미 다음 주소에 배포되어 있습니다: https://github.com/byun970/wori-sample-plugin
+이 저장소는 이미 다음 주소에 배포되어 있습니다: https://github.com/byun970/book-plugin
 
 다른 세션(또는 다른 사용자)은 아래 명령으로 설치할 수 있습니다.
 
 ```bash
-claude plugin marketplace add byun970/wori-sample-plugin
+claude plugin marketplace add byun970/book-plugin
 claude plugin install book-plugin@wori-sample-marketplace
 ```
 
 세션 안에서는 다음과 같이 설치합니다.
 
 ```
-/plugin install book-plugin --marketplace byun970/wori-sample-plugin
+/plugin install book-plugin --marketplace byun970/book-plugin
 ```
 
 설치 후 플러그인을 업데이트할 때는 다음 순서로 진행합니다.
