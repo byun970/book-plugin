@@ -1,0 +1,14 @@
+{
+  "name": "wori-sample-marketplace",
+  "description": "Claude Code 커스텀 플러그인 실습용 마켓플레이스",
+  "owner": {
+    "name": "byun970"
+  },
+  "plugins": [
+    {
+      "name": "sample-toolkit",
+      "source": "./plugins/sample-toolkit",
+      "description": "OpenAPI 기반 MCP 서버, Skill, Hook, Agent를 모두 포함한 실습용 샘플 플러그인"
+    }
+  ]
+}

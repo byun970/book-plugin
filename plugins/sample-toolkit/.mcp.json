@@ -1,0 +1,11 @@
+{
+  "mcpServers": {
+    "todo-api": {
+      "command": "node",
+      "args": ["${CLAUDE_PLUGIN_ROOT}/mcp-server/server.js"],
+      "env": {
+        "API_BASE": "https://jsonplaceholder.typicode.com"
+      }
+    }
+  }
+}

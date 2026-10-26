@@ -1,0 +1,70 @@
+{
+  "openapi": "3.0.3",
+  "info": {
+    "title": "Todo Demo API",
+    "version": "1.0.0",
+    "description": "JSONPlaceholder의 /todos 엔드포인트 일부를 그대로 노출하는 실습용 OpenAPI 스펙"
+  },
+  "servers": [
+    { "url": "https://jsonplaceholder.typicode.com" }
+  ],
+  "paths": {
+    "/todos": {
+      "get": {
+        "operationId": "listTodos",
+        "summary": "할 일 목록 조회",
+        "parameters": [
+          {
+            "name": "userId",
+            "in": "query",
+            "required": false,
+            "schema": { "type": "integer" },
+            "description": "특정 사용자의 할 일만 조회할 때 사용"
+          },
+          {
+            "name": "_limit",
+            "in": "query",
+            "required": false,
+            "schema": { "type": "integer" },
+            "description": "반환할 개수 제한"
+          }
+        ]
+      },
+      "post": {
+        "operationId": "createTodo",
+        "summary": "새 할 일 생성 (모의 응답)",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "required": ["title", "userId"],
+                "properties": {
+                  "title": { "type": "string", "description": "할 일 제목" },
+                  "userId": { "type": "integer", "description": "담당 사용자 ID" },
+                  "completed": { "type": "boolean", "description": "완료 여부", "default": false }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/todos/{id}": {
+      "get": {
+        "operationId": "getTodoById",
+        "summary": "ID로 할 일 단건 조회",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": { "type": "integer" },
+            "description": "조회할 할 일의 ID"
+          }
+        ]
+      }
+    }
+  }
+}
