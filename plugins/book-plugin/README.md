@@ -8,6 +8,15 @@
 
 **저장소**: https://github.com/byun970/book-plugin
 
+## 빠른 시작
+
+| 항목 | 내용 |
+| :- | :- |
+| 이름 | book-plugin |
+| 설명 | Open Library 공개 API로 책을 검색·추천하는 Claude Code 실습 플러그인 |
+| 설치 | `claude plugin marketplace add byun970/book-plugin` 후 `claude plugin install book-plugin@wori-sample-marketplace` |
+| 사용 예시 | `"SF 소설 3권만 추천해줘"` |
+
 | 구성요소 | 위치 | 설명 |
 | :- | :- | :- |
 | OpenAPI 스펙 | `mcp-server/openapi.json` | Book Discovery API(`searchBooks`, `getWorkDetails`, `recommendBySubject`)를 정의 |
