@@ -38,7 +38,43 @@
             },
             "description": "응답에 포함할 필드 목록 (쉼표로 구분)"
           }
-        ]
+        ],
+        "responses": {
+          "200": {
+            "description": "검색 결과 목록. Open Library는 항상 HTTP 200을 반환하며, 결과가 없으면 docs가 빈 배열이다.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "numFound": { "type": "integer", "description": "전체 검색 결과 수" },
+                    "docs": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "key": { "type": "string", "description": "작품 키, 예: /works/OL893414W" },
+                          "title": { "type": "string" },
+                          "author_name": { "type": "array", "items": { "type": "string" } },
+                          "first_publish_year": { "type": "integer" },
+                          "edition_count": { "type": "integer" }
+                        },
+                        "additionalProperties": true
+                      }
+                    }
+                  },
+                  "additionalProperties": true
+                }
+              }
+            }
+          },
+          "default": {
+            "description": "네트워크 오류 등 예기치 못한 오류",
+            "content": {
+              "application/json": { "schema": { "$ref": "#/components/schemas/ErrorResponse" } }
+            }
+          }
+        }
       }
     },
     "/works/{olid}.json": {
@@ -53,7 +89,45 @@
             "schema": { "type": "string" },
             "description": "작품 OLID. 예: OL893414W (searchBooks 결과의 key 필드에서 /works/ 다음 부분)"
           }
-        ]
+        ],
+        "responses": {
+          "200": {
+            "description": "작품 상세 정보",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "title": { "type": "string" },
+                    "key": { "type": "string" },
+                    "description": {
+                      "description": "줄거리. 문자열이거나 {type, value} 객체 형태로 올 수 있다.",
+                      "oneOf": [
+                        { "type": "string" },
+                        { "type": "object", "properties": { "value": { "type": "string" } }, "additionalProperties": true }
+                      ]
+                    },
+                    "covers": { "type": "array", "items": { "type": "integer" } },
+                    "subjects": { "type": "array", "items": { "type": "string" } }
+                  },
+                  "additionalProperties": true
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "해당 OLID의 작품이 존재하지 않음. 실제 응답 예: {\"error\":\"notfound\",\"key\":\"/works/OL999999999W\"}",
+            "content": {
+              "application/json": { "schema": { "$ref": "#/components/schemas/ErrorResponse" } }
+            }
+          },
+          "default": {
+            "description": "그 외 오류",
+            "content": {
+              "application/json": { "schema": { "$ref": "#/components/schemas/ErrorResponse" } }
+            }
+          }
+        }
       }
     },
     "/subjects/{subject}.json": {
@@ -75,7 +149,58 @@
             "schema": { "type": "integer", "default": 5 },
             "description": "반환할 책 개수"
           }
-        ]
+        ],
+        "responses": {
+          "200": {
+            "description": "주제별 추천 도서 목록. 존재하지 않는 subject라도 HTTP 200과 함께 work_count=0, works=[]를 반환한다.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "key": { "type": "string" },
+                    "name": { "type": "string" },
+                    "work_count": { "type": "integer" },
+                    "works": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "key": { "type": "string" },
+                          "title": { "type": "string" },
+                          "cover_id": { "type": "integer" },
+                          "edition_count": { "type": "integer" }
+                        },
+                        "additionalProperties": true
+                      }
+                    }
+                  },
+                  "additionalProperties": true
+                }
+              }
+            }
+          },
+          "default": {
+            "description": "네트워크 오류 등 예기치 못한 오류",
+            "content": {
+              "application/json": { "schema": { "$ref": "#/components/schemas/ErrorResponse" } }
+            }
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "ErrorResponse": {
+        "type": "object",
+        "description": "server.js가 HTTP 오류(!response.ok)를 만났을 때 구성해 돌려주는 구조화된 오류 형태",
+        "properties": {
+          "error": { "type": "string", "description": "HTTP statusText 또는 'HTTP {status}'" },
+          "status": { "type": "integer", "description": "HTTP 상태 코드" },
+          "detail": { "description": "원본 응답 본문. JSON으로 파싱 가능하면 객체, 아니면 문자열" }
+        },
+        "required": ["error", "status"]
       }
     }
   }

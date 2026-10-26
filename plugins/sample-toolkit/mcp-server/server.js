@@ -46,6 +46,13 @@ for (const [routePath, methods] of Object.entries(spec.paths)) {
 function validateArgs(tool, args) {
   const errors = [];
   const schema = tool.inputSchema;
+  const allowedKeys = new Set(Object.keys(schema.properties ?? {}));
+
+  for (const key of Object.keys(args)) {
+    if (!allowedKeys.has(key)) {
+      errors.push(`스펙에 정의되지 않은 파라미터: ${key}`);
+    }
+  }
 
   for (const key of schema.required ?? []) {
     const value = args[key];
@@ -116,16 +123,22 @@ async function callTool(name, args) {
     const text = await response.text();
 
     if (!response.ok) {
-      return {
-        isError: true,
-        content: [{ type: "text", text: `API 오류 (HTTP ${response.status} ${response.statusText}): ${text}` }],
-      };
+      let detail;
+      try {
+        detail = text ? JSON.parse(text) : null;
+      } catch {
+        detail = text;
+      }
+      // openapi.json의 components.schemas.ErrorResponse와 같은 형태로 맞춘다.
+      const errorPayload = { error: response.statusText || `HTTP ${response.status}`, status: response.status, detail };
+      return { isError: true, content: [{ type: "text", text: JSON.stringify(errorPayload, null, 2) }] };
     }
 
     const data = text ? JSON.parse(text) : null;
     return { content: [{ type: "text", text: JSON.stringify(data, null, 2) }] };
   } catch (error) {
-    return { isError: true, content: [{ type: "text", text: `API 호출 실패: ${error.message}` }] };
+    const errorPayload = { error: "network_error", status: 0, detail: error.message };
+    return { isError: true, content: [{ type: "text", text: JSON.stringify(errorPayload, null, 2) }] };
   }
 }
 
@@ -153,7 +166,7 @@ rl.on("line", async (line) => {
       result: {
         protocolVersion: "2024-11-05",
         capabilities: { tools: {} },
-        serverInfo: { name: "sample-toolkit-book-api", version: "0.2.0" },
+        serverInfo: { name: "sample-toolkit-book-api", version: "0.2.1" },
       },
     });
     return;
