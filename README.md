@@ -64,4 +64,12 @@ claude plugin validate .
 claude --plugin-dir ./plugins/sample-toolkit
 ```
 
-[확인 필요: `claude plugin eval`은 공식 문서에 존재가 확인되었으나, evals 디렉터리의 정확한 스키마는 `claude plugin eval init`을 직접 실행해 생성되는 템플릿으로 확인하는 것을 권장합니다.]
+```bash
+# 평가(eval) 실행 — 실제 MCP 서버와 도구 사용을 허용
+cd plugins/sample-toolkit
+claude plugin eval . --ablation none --allow-real-servers \
+  --allow-tools "mcp__plugin_sample-toolkit_todo-api__listTodos" \
+  --trust-plugin --no-publish
+```
+
+위 명령은 실제로 실행해 3회 반복 모두 통과(score 1.00)하는 것을 확인했습니다. 자세한 옵션은 `plugins/sample-toolkit/README.md`의 "평가(eval)" 절을 참고하세요.

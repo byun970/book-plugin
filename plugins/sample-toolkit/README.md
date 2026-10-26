@@ -36,3 +36,20 @@ claude plugin install sample-toolkit@wori-sample-marketplace
 ```bash
 claude plugin validate ./plugins/sample-toolkit --strict
 ```
+
+## 평가(eval)
+
+`evals/todo-briefing-basic/`에 프롬프트(`prompt.md`)와 LLM 채점 기준(`graders/criteria.md`)이 있습니다.
+MCP 서버를 목(mock) 처리하지 않았으므로, 실제 서버 실행과 도구 사용을 명시적으로 허용해야 합니다.
+
+```bash
+claude plugin eval . \
+  --ablation none \
+  --allow-real-servers \
+  --allow-tools "mcp__plugin_sample-toolkit_todo-api__listTodos" \
+  --trust-plugin \
+  --no-publish
+```
+
+`--trust-plugin`은 자신이 작성한 플러그인에 한해 최초 실행 확인 프롬프트를 건너뛸 때 씁니다.
+새 케이스를 추가하려면 `claude plugin eval init <이름> --bare`로 템플릿을 생성합니다.
