@@ -68,6 +68,12 @@
               }
             }
           },
+          "400": {
+            "description": "server.js 자체의 입력값 검증 실패. 업스트림(Open Library)에 요청이 가기 전에 거부된다. detail은 검증 오류 메시지 배열(예: [\"필수 필드 누락: q\"])이다.",
+            "content": {
+              "application/json": { "schema": { "$ref": "#/components/schemas/ErrorResponse" } }
+            }
+          },
           "default": {
             "description": "네트워크 오류 등 예기치 못한 오류",
             "content": {
@@ -115,8 +121,14 @@
               }
             }
           },
+          "400": {
+            "description": "server.js 자체의 입력값 검증 실패(olid 누락 등). 업스트림에 요청이 가기 전에 거부된다.",
+            "content": {
+              "application/json": { "schema": { "$ref": "#/components/schemas/ErrorResponse" } }
+            }
+          },
           "404": {
-            "description": "해당 OLID의 작품이 존재하지 않음. 실제 응답 예: {\"error\":\"notfound\",\"key\":\"/works/OL999999999W\"}",
+            "description": "해당 OLID의 작품이 존재하지 않음. Open Library 원본 응답은 ErrorResponse의 detail 필드 안에 그대로 담긴다. 예: detail = {\"error\":\"notfound\",\"key\":\"/works/OL999999999W\"}",
             "content": {
               "application/json": { "schema": { "$ref": "#/components/schemas/ErrorResponse" } }
             }
@@ -180,6 +192,12 @@
               }
             }
           },
+          "400": {
+            "description": "server.js 자체의 입력값 검증 실패(subject 누락 등). 업스트림에 요청이 가기 전에 거부된다.",
+            "content": {
+              "application/json": { "schema": { "$ref": "#/components/schemas/ErrorResponse" } }
+            }
+          },
           "default": {
             "description": "네트워크 오류 등 예기치 못한 오류",
             "content": {
@@ -194,11 +212,11 @@
     "schemas": {
       "ErrorResponse": {
         "type": "object",
-        "description": "server.js가 HTTP 오류(!response.ok)를 만났을 때 구성해 돌려주는 구조화된 오류 형태",
+        "description": "server.js가 오류를 반환할 때 공통으로 쓰는 구조. error/status는 항상 있고, detail의 형태는 상황에 따라 다르다: 400(server.js 자체 입력값 검증 실패)이면 문자열 배열, 404/default(업스트림 HTTP 오류)이면 Open Library 원본 응답(JSON 파싱 가능하면 객체, 아니면 문자열), 네트워크 오류면 에러 메시지 문자열.",
         "properties": {
-          "error": { "type": "string", "description": "HTTP statusText 또는 'HTTP {status}'" },
-          "status": { "type": "integer", "description": "HTTP 상태 코드" },
-          "detail": { "description": "원본 응답 본문. JSON으로 파싱 가능하면 객체, 아니면 문자열" }
+          "error": { "type": "string", "description": "'validation_error', 'network_error', HTTP statusText, 또는 'HTTP {status}' 중 하나" },
+          "status": { "type": "integer", "description": "HTTP 상태 코드. 입력값 검증 실패는 400, 네트워크 오류는 0" },
+          "detail": { "description": "오류 상세. 400이면 string[], 그 외에는 업스트림 응답 본문 또는 오류 메시지 문자열" }
         },
         "required": ["error", "status"]
       }

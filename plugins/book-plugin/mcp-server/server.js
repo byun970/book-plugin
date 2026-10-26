@@ -87,7 +87,9 @@ async function callTool(name, args) {
 
   const validationErrors = validateArgs(tool, args ?? {});
   if (validationErrors.length > 0) {
-    return { isError: true, content: [{ type: "text", text: `입력값 검증 실패:\n- ${validationErrors.join("\n- ")}` }] };
+    // openapi.json의 각 operation에 정의된 400 응답(ErrorResponse)과 같은 형태로 맞춘다.
+    const errorPayload = { error: "validation_error", status: 400, detail: validationErrors };
+    return { isError: true, content: [{ type: "text", text: JSON.stringify(errorPayload, null, 2) }] };
   }
 
   const effectiveArgs = { ...args };
@@ -166,7 +168,7 @@ rl.on("line", async (line) => {
       result: {
         protocolVersion: "2024-11-05",
         capabilities: { tools: {} },
-        serverInfo: { name: "book-plugin-book-api", version: "0.3.0" },
+        serverInfo: { name: "book-plugin-book-api", version: "0.3.1" },
       },
     });
     return;
