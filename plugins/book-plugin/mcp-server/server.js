@@ -166,7 +166,7 @@ rl.on("line", async (line) => {
       result: {
         protocolVersion: "2024-11-05",
         capabilities: { tools: {} },
-        serverInfo: { name: "sample-toolkit-book-api", version: "0.2.1" },
+        serverInfo: { name: "book-plugin-book-api", version: "0.3.0" },
       },
     });
     return;

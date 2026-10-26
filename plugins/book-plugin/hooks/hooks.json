@@ -2,7 +2,7 @@
   "hooks": {
     "PreToolUse": [
       {
-        "matcher": "mcp__plugin_sample-toolkit_book-api__.*",
+        "matcher": "mcp__plugin_book-plugin_book-api__.*",
         "hooks": [
           {
             "type": "command",

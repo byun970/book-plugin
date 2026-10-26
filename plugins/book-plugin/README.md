@@ -1,4 +1,4 @@
-# sample-toolkit
+# book-plugin
 
 실습용 Claude Code 플러그인. Open Library 공개 API(키 불필요)로 책을 검색·추천하며, 아래 다섯 요소를 모두 포함합니다.
 
@@ -13,7 +13,7 @@
 ## 로컬에서 바로 써보기 (마켓플레이스 배포 전)
 
 ```bash
-claude --plugin-dir ./plugins/sample-toolkit
+claude --plugin-dir ./plugins/book-plugin
 ```
 
 세션 안에서 "SF 소설 3권만 추천해줘" 라고 물어보면 `book-recommender` 스킬과 `book-api` MCP 도구가 동작합니다.
@@ -21,20 +21,20 @@ claude --plugin-dir ./plugins/sample-toolkit
 ## 깃허브에서 설치
 
 ```
-/plugin install sample-toolkit --marketplace byun970/wori-sample-plugin
+/plugin install book-plugin --marketplace byun970/wori-sample-plugin
 ```
 
 또는 CLI에서:
 
 ```bash
 claude plugin marketplace add byun970/wori-sample-plugin
-claude plugin install sample-toolkit@wori-sample-marketplace
+claude plugin install book-plugin@wori-sample-marketplace
 ```
 
 ## 검증
 
 ```bash
-claude plugin validate ./plugins/sample-toolkit --strict
+claude plugin validate ./plugins/book-plugin --strict
 ```
 
 ## 평가(eval)
@@ -46,7 +46,7 @@ MCP 서버를 목(mock) 처리하지 않았으므로, 실제 서버 실행과 �
 claude plugin eval . \
   --ablation none \
   --allow-real-servers \
-  --allow-tools "mcp__plugin_sample-toolkit_book-api__recommendBySubject" \
+  --allow-tools "mcp__plugin_book-plugin_book-api__recommendBySubject" \
   --trust-plugin \
   --no-publish
 ```

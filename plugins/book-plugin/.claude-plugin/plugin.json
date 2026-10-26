@@ -1,6 +1,6 @@
 {
-  "name": "sample-toolkit",
-  "version": "0.2.1",
+  "name": "book-plugin",
+  "version": "0.3.0",
   "description": "Open Library 책 검색·추천 OpenAPI 스펙으로부터 MCP 도구를 동적으로 생성하고, Skill/Hook/Agent를 함께 묶은 실습용 샘플 플러그인",
   "author": {
     "name": "byun970"
